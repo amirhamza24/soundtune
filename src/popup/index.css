@@ -1,0 +1,152 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-bg: #0b0914;
+  --color-surface: #121020;
+  --color-elevated: #19152b;
+  --color-interactive: #221b38;
+  --color-accent: #8b5cf6;
+  --color-bright: #a78bfa;
+  --color-soft: #c4b5fd;
+  --color-fg: #f5f3ff;
+  --color-muted: #a6a0bb;
+  --color-line: rgb(167 139 250 / 0.14);
+  --color-line-strong: rgb(167 139 250 / 0.3);
+  --color-ok: #6ee7b7;
+  --color-err: #fda4af;
+  --color-cool: #8fa2ff;
+  --font-sans: 'Inter', 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  color-scheme: dark;
+  --dur-micro: 160ms;
+  --dur-card: 220ms;
+  --dur-view: 280ms;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* Thin violet scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(139 92 246 / 0.4) transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-bright);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* ---------- motion ---------- */
+@keyframes popup-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes view-in-next {
+  from { opacity: 0; transform: translateX(22px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes view-out-next {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(-22px); }
+}
+@keyframes view-in-prev {
+  from { opacity: 0; transform: translateX(-22px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes view-out-prev {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(22px); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes eq-bounce {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgb(139 92 246 / 0.5); }
+  100% { box-shadow: 0 0 0 8px rgb(139 92 246 / 0); }
+}
+@keyframes shimmer {
+  from { background-position: -200px 0; }
+  to { background-position: 200px 0; }
+}
+@keyframes pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.anim-popup { animation: popup-in 260ms var(--ease) both; }
+.anim-fade-up { animation: fade-up var(--dur-card) var(--ease) both; }
+.anim-pop { animation: pop 260ms var(--ease) both; }
+.view-in-next { animation: view-in-next var(--dur-view) var(--ease) both; }
+.view-out-next { animation: view-out-next var(--dur-view) var(--ease) both; pointer-events: none; }
+.view-in-prev { animation: view-in-prev var(--dur-view) var(--ease) both; }
+.view-out-prev { animation: view-out-prev var(--dur-view) var(--ease) both; pointer-events: none; }
+.eq-bar { transform-origin: bottom; animation: eq-bounce 900ms ease-in-out infinite; }
+.skeleton {
+  background: linear-gradient(90deg, rgb(255 255 255 / 0.03), rgb(167 139 250 / 0.1), rgb(255 255 255 / 0.03));
+  background-size: 200px 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+.surface-card {
+  background: linear-gradient(180deg, rgb(34 27 56 / 0.55), rgb(25 21 43 / 0.9));
+  border: 1px solid var(--color-line);
+}
+
+.tt {
+  opacity: 0;
+  transform: translateY(2px);
+  transition: opacity 140ms var(--ease), transform 140ms var(--ease);
+  pointer-events: none;
+}
+.has-tt:hover .tt,
+.has-tt:focus-visible .tt {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 350ms;
+}
+
+.knob-glow {
+  box-shadow: 0 0 0 1px rgb(196 181 253 / 0.5), 0 0 14px rgb(139 92 246 / 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+  .eq-bar { animation: none; transform: scaleY(0.6); }
+  .skeleton { animation: none; }
+}
