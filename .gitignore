@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+
+# build output (recreate with `npm run build`)
+dist/
+tests/harness/out/
+
+# test artifacts
+tests/shots/
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# env / misc
+.env
+.env.*
+*.local
+*.tsbuildinfo
